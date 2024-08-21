@@ -1,8 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="APITestSuite" verbose="1">
+    <listeners>
+        <listener class-name="Listeners.Log4jListener"></listener>
+        <listener class-name="Listeners.ExtentReportListener"></listener>
+    </listeners>
     <test name="APIAutomationTest">
         <classes>
-            <class name="TrainingRA2024"/>
+            <class name="Tests.TrainingRA2024"/>
         </classes>
     </test>
 </suite>
