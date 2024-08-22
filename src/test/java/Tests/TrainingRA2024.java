@@ -1,12 +1,14 @@
 package Tests;
 
+import Utils.ExcelUtils;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.apache.log4j.ConsoleAppender;
 import org.testng.annotations.Test;
 
-import javax.swing.*;
+import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TrainingRA2024 {
     @Test(enabled = false)
@@ -15,7 +17,7 @@ public class TrainingRA2024 {
         RestAssured.baseURI = "https://api.trello.com";
 
         HashMap<String, String> hm = new HashMap<>();
-        hm.put("Content-Type","application/json");
+        hm.put("Content-Type", "application/json");
         hm.put("Accept", "*/*");
 
         HashMap<String, String> queryParamMap = new HashMap<>();
@@ -46,6 +48,35 @@ public class TrainingRA2024 {
 
     }
 
+    @Test(enabled = false)
+    public void secondPostAPI() {
+
+        RestAssured.baseURI = "https://api.trello.com";
+
+        String filePath = new File("src/test/resources/testData/boards/createBoardPOST.xlsx").getAbsolutePath();
+
+        Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
+
+        Map<String, String> queryParamsMap = ExcelUtils.getExcelData(filePath, "queryParams");
+
+        Response response = RestAssured
+                .given()
+                .headers(headersMap)
+                .queryParams(queryParamsMap)
+                .log().all()
+                .when()
+                .body("")
+                .post("/1/boards")
+                .then()
+                .extract()
+                .response();
+
+        System.out.println(response.prettyPrint());
+        System.out.println(response.getStatusCode());
+        System.out.println(response.body());
+        response.then().statusCode(200);
+
+    }
 
     @Test(enabled = false)
     public void firstGetAPI() {
@@ -56,7 +87,7 @@ public class TrainingRA2024 {
 
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void secondGetAPI() {
         RestAssured.baseURI = "https://api.trello.com";
         Response response = RestAssured
@@ -94,12 +125,38 @@ public class TrainingRA2024 {
         response.then().statusCode(200);
     }
 
-    @Test()
+    @Test(enabled = true)
+    public void fourthGetAPI() {
+        RestAssured.baseURI = "https://api.trello.com";
+
+        String filePath = new File("src/test/resources/testData/boards/getBoardGET.xlsx").getAbsolutePath();
+
+        Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
+
+        Map<String, String> pathParamsMap = ExcelUtils.getExcelData(filePath, "pathParams");
+
+        Map<String, String> queryParamsMap = ExcelUtils.getExcelData(filePath, "queryParams");
+
+        Response response = RestAssured
+                .given()
+                .headers(headersMap)
+                .pathParams(pathParamsMap)
+                .queryParams(queryParamsMap)
+                .when()
+                .get("1/boards/{boardId}")
+                .then()
+                .extract()
+                .response();
+        System.out.println(response.prettyPrint());
+        response.then().statusCode(200);
+    }
+
+    @Test(enabled = false)
     public void firstPutAPI() {
         RestAssured.baseURI = "https://api.trello.com";
 
         HashMap<String, String> hm = new HashMap<>();
-        hm.put("Content-Type","application/json");
+        hm.put("Content-Type", "application/json");
         hm.put("Accept", "*/*");
 
         HashMap<String, String> queryParamMap = new HashMap<>();
@@ -110,7 +167,7 @@ public class TrainingRA2024 {
         Response response = RestAssured
                 .given()
                 .headers(hm)
-                .pathParam("boardId","66c5a4b10169a92b500b7c53")
+                .pathParam("boardId", "66c5a4b10169a92b500b7c53")
                 .queryParams(queryParamMap)
                 .when()
                 .body("")
@@ -125,9 +182,41 @@ public class TrainingRA2024 {
     }
 
     @Test(enabled = false)
+    public void secondPutAPI() {
+        RestAssured.baseURI = "https://api.trello.com";
+
+        String filePath = new File("src/test/resources/testData/boards/updateBoardPUT.xlsx").getAbsolutePath();
+
+        Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
+
+        Map<String, String> pathParamsMap = ExcelUtils.getExcelData(filePath, "pathParams");
+
+        Map<String, String> queryParamsMap = ExcelUtils.getExcelData(filePath, "queryParams");
+
+        Response response = RestAssured
+                .given()
+                .headers(headersMap)
+                .pathParams(pathParamsMap)
+                .queryParams(queryParamsMap)
+                .log().all()
+                .when()
+                .body("")
+                .put("/1/boards/{boardId}")
+                .then()
+                .extract()
+                .response();
+
+        System.out.println(response.prettyPrint());
+        System.out.println(response.getStatusCode());
+        System.out.println(response.body());
+        response.then().statusCode(200);
+    }
+
+    @Test(enabled = false)
     public void firstPatchAPI() {
 
     }
+
     @Test(enabled = false)
     public void firstDeleteAPI() {
         RestAssured.baseURI = "https://api.trello.com";
@@ -146,5 +235,32 @@ public class TrainingRA2024 {
                 .response();
         System.out.println(response.prettyPrint());
         System.out.println(response.statusCode());
+    }
+
+    @Test(enabled = false)
+    public void secondDeleteAPI() {
+        RestAssured.baseURI = "https://api.trello.com";
+
+        String filePath = new File("src/test/resources/testData/boards/deleteBoardDELETE.xlsx").getAbsolutePath();
+
+        Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
+
+        Map<String, String> pathParamsMap = ExcelUtils.getExcelData(filePath, "pathParams");
+
+        Map<String, String> queryParamsMap = ExcelUtils.getExcelData(filePath, "queryParams");
+
+        Response response = RestAssured
+                .given()
+                .headers(headersMap)
+                .pathParams(pathParamsMap)
+                .queryParams(queryParamsMap)
+                .when()
+                .delete("1/boards/{boardId}")
+                .then()
+                .extract()
+                .response();
+        System.out.println(response.prettyPrint());
+        System.out.println(response.statusCode());
+        response.then().statusCode(200);
     }
 }
