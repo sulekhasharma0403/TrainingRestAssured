@@ -6,7 +6,6 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
