@@ -52,7 +52,7 @@ public class TrainingRA2024 {
 
         RestAssured.baseURI = "https://api.trello.com";
 
-        String filePath = new File("src/test/resources/testData/boards/createBoardPOST.xlsx").getAbsolutePath();
+        String filePath = new File("src/test/resources/testData/boards/createBoard.xlsx").getAbsolutePath();
 
         Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
 
@@ -124,11 +124,11 @@ public class TrainingRA2024 {
         response.then().statusCode(200);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void fourthGetAPI() {
         RestAssured.baseURI = "https://api.trello.com";
 
-        String filePath = new File("src/test/resources/testData/boards/getBoardGET.xlsx").getAbsolutePath();
+        String filePath = new File("src/test/resources/testData/boards/getBoard.xlsx").getAbsolutePath();
 
         Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
 
@@ -184,7 +184,7 @@ public class TrainingRA2024 {
     public void secondPutAPI() {
         RestAssured.baseURI = "https://api.trello.com";
 
-        String filePath = new File("src/test/resources/testData/boards/updateBoardPUT.xlsx").getAbsolutePath();
+        String filePath = new File("src/test/resources/testData/boards/updateBoard.xlsx").getAbsolutePath();
 
         Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
 
@@ -240,7 +240,7 @@ public class TrainingRA2024 {
     public void secondDeleteAPI() {
         RestAssured.baseURI = "https://api.trello.com";
 
-        String filePath = new File("src/test/resources/testData/boards/deleteBoardDELETE.xlsx").getAbsolutePath();
+        String filePath = new File("src/test/resources/testData/boards/deleteBoard.xlsx").getAbsolutePath();
 
         Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
 

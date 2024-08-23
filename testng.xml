@@ -6,7 +6,11 @@
     </listeners>
     <test name="APIAutomationTest">
         <classes>
-            <class name="Tests.TrainingRA2024"/>
+            <class name="Tests.BaseTest" />
+            <class name="Tests.CreateBoard"/>
+            <class name="Tests.GetBoard"/>
+            <class name="Tests.UpdateBoard"/>
+            <class name="Tests.DeleteBoard"></class>
         </classes>
     </test>
 </suite>
