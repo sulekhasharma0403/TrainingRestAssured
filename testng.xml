@@ -10,6 +10,14 @@
             <class name="Tests.CreateBoard"/>
             <class name="Tests.GetBoard"/>
             <class name="Tests.UpdateBoard"/>
+            <class name="Tests.CreateList"></class>
+            <class name="Tests.CreateCard"></class>
+            <class name="Tests.UpdateCard"></class>
+            <class name="Tests.CreateLabel"></class>
+            <class name="Tests.GetLabel"></class>
+            <class name="Tests.UpdateLabel"></class>
+            <class name="Tests.DeleteLabel"></class>
+            <class name="Tests.DeleteCard"></class>
             <class name="Tests.DeleteBoard"></class>
         </classes>
     </test>

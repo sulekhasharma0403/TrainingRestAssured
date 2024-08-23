@@ -9,11 +9,11 @@ import java.util.Map;
 
 public class DeleteBoard extends BaseTest{
 
-    @Test(dependsOnMethods = "Tests.CreateBoard.createBoard")
+    @Test(dependsOnMethods = {"Tests.CreateBoard.createBoard","Tests.CreateList.createList","Tests.CreateCard.createCard","Tests.CreateLabel.createLabel"})
     public void deleteBoard() {
-        RestAssured.baseURI = "https://api.trello.com";
+        RestAssured.baseURI = baseUri;
 
-        String filePath = new File("src/test/resources/testData/boards/deleteBoard.xlsx").getAbsolutePath();
+        String filePath = new File(deleteBoardFilePath).getAbsolutePath();
 
         Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
 

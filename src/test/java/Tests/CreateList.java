@@ -7,29 +7,40 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.util.Map;
 
-public class GetBoard extends BaseTest{
-
+public class CreateList extends BaseTest {
     @Test(dependsOnMethods = "Tests.CreateBoard.createBoard")
-    public void getBoard() {
+    public void createList() {
+
+
         RestAssured.baseURI = baseUri;
 
-        String filePath = new File(getBoardFilePath).getAbsolutePath();
+        String filePath = new File(createListFilePath).getAbsolutePath();
 
         Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
+
+        Map<String, String> queryParamsMap = ExcelUtils.getExcelData(filePath, "queryParams");
 
         Response response = RestAssured
                 .given()
                 .headers(headersMap)
-                .pathParam("boardId",boardId)
-                .queryParam("key",apiKey)
-                .queryParam("token",apiToken)
+                .queryParam("key", apiKey)
+                .queryParam("token", apiToken)
+                .queryParam("idBoard", boardId)
+                .queryParams(queryParamsMap)
+                .log().all()
                 .when()
-                .get("1/boards/{boardId}")
+                .body("")
+                .post("/1/lists")
                 .then()
                 .extract()
                 .response();
-        System.out.println(response.prettyPrint());
-        response.then().statusCode(200);
-    }
 
+        System.out.println(response.prettyPrint());
+        System.out.println(response.getStatusCode());
+        System.out.println(response.body());
+        response.then().statusCode(200);
+
+        listId = response.path("id");
+
+    }
 }

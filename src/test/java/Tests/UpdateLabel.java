@@ -4,18 +4,16 @@ import Utils.ExcelUtils;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
-
 import java.io.File;
 import java.util.Map;
 
-public class CreateBoard extends BaseTest {
+public class UpdateLabel extends BaseTest {
 
-    @Test(enabled = true)
-    public void createBoard() {
-
+    @Test(dependsOnMethods = "Tests.CreateLabel.createLabel")
+    public void updateLabel() {
         RestAssured.baseURI = baseUri;
 
-        String filePath = new File(createBoardFilePath).getAbsolutePath();
+        String filePath = new File(updateLabelFilePath).getAbsolutePath();
 
         Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
 
@@ -24,13 +22,13 @@ public class CreateBoard extends BaseTest {
         Response response = RestAssured
                 .given()
                 .headers(headersMap)
+                .pathParam("labelId", labelId)
                 .queryParam("key", apiKey)
                 .queryParam("token", apiToken)
                 .queryParams(queryParamsMap)
-                .log().all()
                 .when()
                 .body("")
-                .post("/1/boards")
+                .put("/1/labels/{labelId}")
                 .then()
                 .extract()
                 .response();
@@ -38,9 +36,8 @@ public class CreateBoard extends BaseTest {
         System.out.println(response.prettyPrint());
         System.out.println(response.getStatusCode());
         System.out.println(response.body());
+
         response.then().statusCode(200);
-
-        boardId = response.path("id");
-
     }
+
 }

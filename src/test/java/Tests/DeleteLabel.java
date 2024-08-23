@@ -7,29 +7,30 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.util.Map;
 
-public class GetBoard extends BaseTest{
 
-    @Test(dependsOnMethods = "Tests.CreateBoard.createBoard")
-    public void getBoard() {
+public class DeleteLabel extends BaseTest{
+
+    @Test(dependsOnMethods = "Tests.CreateLabel.createLabel")
+    public void updateLabel() {
         RestAssured.baseURI = baseUri;
 
-        String filePath = new File(getBoardFilePath).getAbsolutePath();
+        String filePath = new File(deleteLabelFilePath).getAbsolutePath();
 
         Map<String, String> headersMap = ExcelUtils.getExcelData(filePath, "headers");
 
         Response response = RestAssured
                 .given()
                 .headers(headersMap)
-                .pathParam("boardId",boardId)
-                .queryParam("key",apiKey)
-                .queryParam("token",apiToken)
+                .pathParam("labelId", labelId)
+                .queryParam("key", apiKey)
+                .queryParam("token", apiToken)
                 .when()
-                .get("1/boards/{boardId}")
+                .delete("1/labels/{labelId}")
                 .then()
                 .extract()
                 .response();
         System.out.println(response.prettyPrint());
+        System.out.println(response.statusCode());
         response.then().statusCode(200);
     }
-
 }
